@@ -1,10 +1,19 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, status
+from rest_framework.response import Response
 from .models import User
 from .serializers import UserSerializer
+from rest_framework.authtoken.models import Token
+from rest_framework.decorators import action
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+    @action(detail=False, methods=['delete'])
+    def logout(self, request, *args, **kwargs):
+        Token.objects.filter(user=request.user).delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    
     
 
 # Here's a breakdown of each line:
