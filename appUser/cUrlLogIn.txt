@@ -1,0 +1,24 @@
+Login:
+
+curl -X POST -H "Content-Type: application/json" -d '{"username": "newuser", "password": "newpassword"}' http://localhost:8000/dj-rest-auth/login/
+
+Logout:
+
+
+TOKEN=$(curl -s -X POST -H "Content-Type: application/json" -d '{"username": "newuser", "password": "newpassword"}' http://localhost:8000/dj-rest-auth/login/ | jq -r '.key')
+
+echo $TOKEN
+
+curl -X POST -H "Authorization: Token 6c0b95b29a9e37be13fa871e0c2396e7a80bb634" http://localhost:8000/dj-rest-auth/logout/
+
+Get user info:
+
+curl -X GET -H "Authorization: Token 6c0b95b29a9e37be13fa871e0c2396e7a80bb634" http://localhost:8000/dj-rest-auth/user/
+
+Password change:
+
+# First, you need to login to get the token
+TOKEN=$(curl -s -X POST -H "Content-Type: application/json" -d '{"username": "testuser", "password": "testpassword"}' http://localhost:8000/dj-rest-auth/rest_login/ | jq -r '.key')
+
+# Then, you can use this token to change the password
+curl -X POST -H "Content-Type: application/json" -H "Authorization: Token 6c0b95b29a9e37be13fa871e0c2396e7a80bb634" -d '{"new_password1": "newtestpassword", "new_password2": "newtestpassword"}' http://localhost:8000/dj-rest-auth/password/change/
