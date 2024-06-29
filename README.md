@@ -11,5 +11,14 @@ This project demonstrates a basic authentication system using Django, Django RES
 
 ## Installation
 
-- python3 -m venv venv
+- VENV
+    - MAC: python3 -m venv venv
+    - WIN: python -m venv venv
+
+- ACTIVATE
+    - MAC: source venv/bin/activate
+    - WIN: venv\Scripts\activate
+
 - pip install -r requirements.txt
+
+- python manage.py runserver
